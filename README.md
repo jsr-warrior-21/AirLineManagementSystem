@@ -26,11 +26,12 @@
 ```
 {
 "development": {
-  "username": "Arvind",
-  "password": "Mysql@21",
+  "username": "<Login_name>",
+  "password": "<Your MySQL Password>",
   "database": "Flight_search_DB_dev",
   "host": "127.0.0.1",
   "dialect": "mysql"
 }
 }
 ```
+- Once you've added your db config as listed above , go to the src folder from your terminal and execute `npx sequelize db:create`
