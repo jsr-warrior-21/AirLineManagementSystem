@@ -8,6 +8,9 @@ const setupAndStartServer = async () =>{
         app.use(bodyParser.urlencoded({extended:true}));
     app.listen(PORT,async()=>{
         console.log(`server started at ${PORT}`);
+        const repo = new CityRepository();
+        // repo.createCity({name:"Bombay"});
+        // repo.deleteCity(1) // using this you can delete city also from your data bases;
     });
 }
 setupAndStartServer();

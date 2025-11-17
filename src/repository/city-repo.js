@@ -1,25 +1,61 @@
 const { City } = require("../models/index");
 
 class CityRepository {
-  async createCity({ name }) { // here you are destructing the name object so you are using curley braces;
-    try { // for creating the new row in database table
-      const city = await City.create({ name }); // thats why i am passing name argumet direclty.
+  async createCity({ name }) {
+    try {
+      const city = await City.create({
+        // here City is the name  of the db while setting up sequelize
+        name,
+      });
+      return city;
     } catch (error) {
+      console.log("Something went wrong in the repository layer.");
       throw { error };
     }
   }
 
   async deleteCity(cityId) {
-    try {// for deleting the row of one city from the city databases.
+    try {
       await City.destroy({
+        // inside the destroy we are using an object then where keyWord because
+        // it does filterartion by which contraints you are deleting the this repo or thing thing from the db;
         where: {
-          id: cityId
+          id: cityId,
         },
       });
+      return true;
     } catch (error) {
+      console.log("Something is wrong in the repository.");
+      throw { error };
+    }
+  }
+
+  async updateCity(cityId,data) {
+      try {
+        const city = await City.upadate(data,{
+          where:{
+            id:cityId  // filteration via cityId
+          }
+
+        });
+        return city;
+      } catch (error) {
+         console.log("Something is wrong in the repository.");
+      throw {error};
+      }
+  }
+
+  async getCity(cityId) {
+    try {
+      const city = await City.findByPk(cityId);
+      return city;
+    } catch (error) {
+      console.log("Something is wrong in the repository.");
       throw { error };
     }
   }
 }
 
-module.exports = {CityRepository};
+// for finding all this method you can open sequelize model Querying
+
+module.exports = CityRepository;
