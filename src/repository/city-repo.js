@@ -1,7 +1,6 @@
 const { City } = require("../models/index");
 
 class CityRepository {
-  
   async createCity({ name }) {
     try {
       const city = await City.create({
@@ -31,19 +30,24 @@ class CityRepository {
     }
   }
 
-  async updateCity(cityId,data) {
-      try {
-        const city = await City.upadate(data,{
-          where:{
-            id:cityId  // filteration via cityId
-          }
+  async updateCity(cityId, data) {
+    try {
+      // const city = await City.update(data,{
+      //   where:{
+      //     id:cityId  // filteration via cityId
+      //   }
 
-        });
-        return city;
-      } catch (error) {
-         console.log("Something is wrong in the repository.");
-      throw {error};
-      }
+      // });
+      // return city;
+
+      const city = await City.findByPk(cityId);
+      city.name = data.name;
+      await city.save();
+      return city;
+    } catch (error) {
+      console.log("Something is wrong in the repository.");
+      throw { error };
+    }
   }
 
   async getCity(cityId) {
@@ -55,7 +59,16 @@ class CityRepository {
       throw { error };
     }
   }
-}
+  async getAllCities() {
+    try {
+      const cities = await City.findAll();
+      return cities;
+    } catch (error) {
+      console.log("Something is wrong in the repository.");
+      throw { error };
+    }
+  }
+};
 
 // for finding all this method you can open sequelize model Querying
 
