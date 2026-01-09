@@ -1,5 +1,8 @@
 "use strict";
 const { Model } = require("sequelize");
+const {SALT} = require("../config/serverConfig");
+const bcrypt = require('bcrypt');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -34,5 +37,15 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "User",
     }
   );
+
+  // encryption
+
+  User.beforeCreate((user)=>{ // before user creation you have access to the user credential.
+    const encryptedPassword = bcrypt.hashSync(user.password,SALT); // user.password access your plane pass and hashSync will encrypt your password then update your password
+    user.password = encryptedPassword; 
+  });
+  
+  // now you have done with encryption of the password and in the database password will save with encryption.
+
   return User;
 };
