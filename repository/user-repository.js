@@ -2,7 +2,6 @@ const { where } = require("sequelize");
 const { User } = require("../models/index");
 
 class UserRepository {
-
   async create(data) {
     try {
       const user = await User.create(data);
@@ -27,10 +26,10 @@ class UserRepository {
     }
   }
 
-  async getById(userId){
+  async getById(userId) {
     try {
-      const user = await User.findByPk(userId,{
-        attributes:['email','id']
+      const user = await User.findByPk(userId, {
+        attributes: ["email", "id"],
       });
       return user;
     } catch (error) {
@@ -39,7 +38,19 @@ class UserRepository {
     }
   }
 
+  async getByEmail(userEmail) {
+    try {
+      const user = await User.findOne({
+        where: {
+          email: userEmail,
+        },
+      });
+      return user;
+    } catch (error) {
+      console.log("Something went wrong on the repository layer.");
+      throw error;
+    }
+  }
 }
 
-
-module.exports = UserRepository
+module.exports = UserRepository;

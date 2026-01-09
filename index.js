@@ -36,13 +36,13 @@ const prepareAndStartServer  = () =>{
         // console.log(response);
 
 
-        const service = new UserService();
-        // const newToken = service.createToken({email:'am@admin.com',id:1});
-        // console.log("new token is",newToken);
+        // const service = new UserService();
+        // // const newToken = service.createToken({email:'am@admin.com',id:1});
+        // // console.log("new token is",newToken);
 
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFtQGFkbWluLmNvbSIsImlkIjoxLCJpYXQiOjE3Njc5NDQzMDgsImV4cCI6MTc2Nzk0NzkwOH0.BzJVoBN606n3OsIDgiDtCIB7DPuq5yxlxmMrlxpQeqo'
-        const response = service.verifyToken(token);
-        console.log(response);
+        // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFtQGFkbWluLmNvbSIsImlkIjoxLCJpYXQiOjE3Njc5NDQzMDgsImV4cCI6MTc2Nzk0NzkwOH0.BzJVoBN606n3OsIDgiDtCIB7DPuq5yxlxmMrlxpQeqo'
+        // const response = service.verifyToken(token);
+        // console.log(response);
         
     });
 }
