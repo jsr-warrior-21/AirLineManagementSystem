@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 const {PORT} = require("./config/serverConfig");
 const apiRoutes = require('./routes/index');
+const UserService = require("./services/user-service");
 
 // const bcrypt= require("bcrypt");
 // const {User} = require("./models/index");
@@ -33,6 +34,16 @@ const prepareAndStartServer  = () =>{
         // const user = await User.findByPk(1);
         // const response = bcrypt.compareSync(incomingPassword,user.password)
         // console.log(response);
+
+
+        const service = new UserService();
+        // const newToken = service.createToken({email:'am@admin.com',id:1});
+        // console.log("new token is",newToken);
+
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFtQGFkbWluLmNvbSIsImlkIjoxLCJpYXQiOjE3Njc5NDQzMDgsImV4cCI6MTc2Nzk0NzkwOH0.BzJVoBN606n3OsIDgiDtCIB7DPuq5yxlxmMrlxpQeqo'
+        const response = service.verifyToken(token);
+        console.log(response);
+        
     });
 }
 prepareAndStartServer();
