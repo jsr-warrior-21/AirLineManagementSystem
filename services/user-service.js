@@ -12,8 +12,16 @@ class UserService {
       const user = await this.userRepository.create(data);
       return user;
     } catch (error) {
+      if ((error.name = "ValidationError")) {
+        throw error;
+      }
       console.log("Something went wrong in the service layer.");
-      throw error;
+      throw new AppErrors(
+        "ServerError",
+        "Something went wrong in service",
+        "Logical Issue found",
+        500
+      );
     }
   }
 
@@ -84,20 +92,14 @@ class UserService {
     }
   }
 
-
-  isAdmin(userId){
+  isAdmin(userId) {
     try {
-      return this.userRepository.isAdmin(useId)
+      return this.userRepository.isAdmin(useId);
     } catch (error) {
       console.log("Something went wrong in  Service layer.");
       throw error;
     }
   }
-
-
-
-
-
 }
 
 module.exports = UserService;

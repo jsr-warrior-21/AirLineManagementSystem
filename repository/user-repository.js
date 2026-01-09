@@ -1,16 +1,24 @@
-const { where } = require("sequelize");
+const { where, ValidationError } = require("sequelize");
 const { User,Role } = require("../models/index");
 
 class UserRepository {
+
+
   async create(data) {
     try {
       const user = await User.create(data);
       return user;
     } catch (error) {
+      if(error.name ="SequelizeValidationError" ){
+          throw new ValidationError(error);
+      }
+
       console.log("Something went wrong on the Repository layer.");
       throw error;
     }
-  }
+  }  
+
+
 
   async destroy(userId) {
     try {
@@ -26,6 +34,8 @@ class UserRepository {
     }
   }
 
+
+
   async getById(userId) {
     try {
       const user = await User.findByPk(userId, {
@@ -37,6 +47,8 @@ class UserRepository {
       throw error;
     }
   }
+
+
 
   async getByEmail(userEmail) {
     try {
@@ -52,6 +64,7 @@ class UserRepository {
     }
   }
 
+  
 
   async isAdmin(userId){
     try {
