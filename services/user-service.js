@@ -37,27 +37,43 @@ class UserService {
     }
   }
 
-  async signIn(email,plainPassword){
+  async signIn(email, plainPassword) {
     try {
-       // step1 - fetch the user using email
+      // step1 - fetch the user using email
       const user = await this.userRepository.getByEmail(email);
 
       // step2 - compare incoming plain password with encrypted store password
-      const passwordMatch = this.checkPassword(plainPassword,user.password);
-      if(!passwordMatch){
+      const passwordMatch = this.checkPassword(plainPassword, user.password);
+      if (!passwordMatch) {
         console.log("Password doesn't match.");
-        throw {errora:'Incorrect password'};
+        throw { errora: "Incorrect password" };
       }
       // step3 - if the password match then we are going to create new JWT token
-      const newJWT = this.createToken({email:user.email,id:user.id});
+      const newJWT = this.createToken({ email: user.email, id: user.id });
       return newJWT;
-
     } catch (error) {
       console.log("Something went wrong in the sign in process.");
       throw error;
     }
   }
 
+  async isAuthenticated(token) {
+    try {
+      const response = this.verifyToken(token);
+      if (!response) {
+        throw { error: "Invalide token" };
+      }
+
+      const user = this.userRepository.getById(response.id);
+      if (!user) {
+        throw { error: "No user with the corrosponding token exists." };
+      }
+      return user.id;
+    } catch (error) {
+      console.log("Something went wrong in the auth in process.");
+      throw error;
+    }
+  }
 
   checkPassword(userInputPlainPassword, encryptedPassword) {
     try {
